@@ -54,8 +54,18 @@ function migrate() {
   addColumnIfMissing('tv_channels', 'parallel_count', 'INTEGER');
 }
 
-/** Legt Tabellen an (idempotent) und haelt die Wettbewerbsliste aktuell. */
-export function initSchema() {
+let schemaBereit = false;
+
+/**
+ * Legt Tabellen an (idempotent) und haelt die Wettbewerbsliste aktuell.
+ *
+ * Wird am Ende dieser Datei automatisch aufgerufen - siehe die Begruendung
+ * dort. Die exportierte Form bleibt fuer Skripte erhalten, die ausdruecklich
+ * initialisieren wollen; ein zweiter Aufruf kostet praktisch nichts.
+ */
+export function initSchema({ force = false } = {}) {
+  if (schemaBereit && !force) return { dbPath };
+
   const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
   db.exec(schema);
   migrate();
@@ -75,5 +85,23 @@ export function initSchema() {
     for (const c of COMPETITIONS) upsert.run(c);
   })();
 
+  schemaBereit = true;
   return { dbPath };
 }
+
+/**
+ * Schema sofort beim Laden dieses Moduls anlegen.
+ *
+ * WARUM HIER UND NICHT IM AUFRUFER:
+ * ES-Module werden vollstaendig ausgewertet, bevor der Rumpf der
+ * importierenden Datei laeuft. services/broadcasts.js und services/sync.js
+ * bereiten ihre SQL-Anweisungen auf oberster Ebene vor - die liefen also
+ * los, bevor server.js ueberhaupt zu seinem initSchema() kam.
+ *
+ * Bei einer bestehenden Datenbank faellt das nicht auf. Bei einer frischen
+ * bricht der Start ab mit "no such table: broadcast_overrides" - genau das
+ * waere beim ersten Deployment passiert.
+ *
+ * Wer die Datenbank in der Hand hat, legt hier auch das Schema an.
+ */
+initSchema();
