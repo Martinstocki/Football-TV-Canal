@@ -38,6 +38,27 @@ zu Hause nicht durchlaufen soll.
 
 Du hast nach Railway gefragt, also geht es unten damit weiter.
 
+### Weg C — Oracle Cloud Always Free
+
+Dauerhaft kostenlos, echter Server mit Festplatte, läuft durch. Kein
+Ablaufdatum. Dafür verwaltest du eine Linux-VM selbst: SSH, systemd-Dienst,
+zwei Firewalls, HTTPS über Caddy.
+
+**Eigene Anleitung: [DEPLOY-ORACLE.md](DEPLOY-ORACLE.md)** — 1 bis 2 Stunden
+beim ersten Mal.
+
+### Was für diese App nicht funktioniert
+
+Die App braucht zwei Dinge, die viele Gratis-Angebote nicht bieten: eine
+**Datei, die Neustarts übersteht** (die SQLite-Datenbank) und einen
+**dauerhaft laufenden Prozess** (den Zeitplan um 08:00 und 18:00).
+
+| | Warum es scheitert |
+|---|---|
+| Render Free | keine persistente Festplatte → Datenbank nach jedem Neustart leer; schläft nach 15 Min → Zeitplan feuert nicht |
+| Vercel, Netlify | serverlos, kein dauerhafter Prozess, kein beschreibbares Dateisystem |
+| Cloudflare Pages | dasselbe — für statische Seiten gedacht |
+
 ### Warum Railway und nicht Fly.io
 
 Beide funktionieren. Für den ersten Versuch empfehle ich **Railway**:

@@ -1,0 +1,35 @@
+# Caddy als Vorschaltserver: kuemmert sich um HTTPS und reicht die
+# Anfragen an die App weiter.
+#
+# Warum ueberhaupt HTTPS: Basic Auth schickt Benutzername und Passwort bei
+# JEDER Anfrage mit. Ueber unverschluesseltes HTTP stehen die im Klartext
+# im Netz. Caddy holt und erneuert das Zertifikat vollautomatisch.
+#
+# Installieren:
+#   sudo cp deploy/Caddyfile.example /etc/caddy/Caddyfile
+#   sudo nano /etc/caddy/Caddyfile      <- Adresse eintragen
+#   sudo systemctl reload caddy
+
+# HIER DEINE ADRESSE EINTRAGEN.
+# Kostenlos zu haben ueber duckdns.org, z. B. martin-fussball.duckdns.org
+DEINE-ADRESSE.duckdns.org {
+
+	# Die App laeuft nur auf localhost und ist von aussen nicht direkt
+	# erreichbar - alles muss durch Caddy. So gibt es keinen Weg, das
+	# HTTPS zu umgehen.
+	reverse_proxy 127.0.0.1:3000
+
+	encode gzip
+
+	# Serverkennung nicht ausplaudern.
+	header -Server
+
+	# Die App setzt X-Robots-Tag selbst, das muss hier nicht doppelt stehen.
+
+	log {
+		output file /var/log/caddy/fussball.log {
+			roll_size 10mb
+			roll_keep 3
+		}
+	}
+}
