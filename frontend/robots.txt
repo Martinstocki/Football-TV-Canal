@@ -1,0 +1,6 @@
+# Private Familien-App - nicht indexieren.
+# Zusaetzlich schickt der Server den Header X-Robots-Tag: noindex
+# und schuetzt alles ausser /healthz mit Basic Auth.
+
+User-agent: *
+Disallow: /

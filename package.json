@@ -1,0 +1,40 @@
+{
+  "name": "fussball-programm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Privates Fussball-TV-Programm fuer die Familie",
+  "type": "module",
+  "engines": {
+    "node": ">=20 <27"
+  },
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js",
+    "db:init": "node scripts/init-db.js",
+    "db:reset": "node scripts/init-db.js --force",
+    "seed": "node scripts/seed-demo.js",
+    "seed:uecl": "node scripts/seed-uecl-demo.js",
+    "sync": "node scripts/import-matches.js",
+    "sync:week": "node scripts/import-matches.js --days 7",
+    "fixtures": "node scripts/fetch-fixtures.js",
+    "fixtures:show": "node scripts/fetch-fixtures.js --show",
+    "tv": "node scripts/fetch-tv-guide.js",
+    "tv:dry": "node scripts/fetch-tv-guide.js --dry-run --verbose",
+    "tv:force": "node scripts/fetch-tv-guide.js --force",
+    "tv:verify": "node scripts/verify-tv.js",
+    "tv:channels": "node scripts/show-channels.js",
+    "tv:dropped": "node scripts/show-channels.js --all-dropped",
+    "scheduler": "node scripts/scheduler.js",
+    "scheduler:once": "node scripts/scheduler.js --once",
+    "scheduler:test": "node scripts/scheduler.js --cron \"* * * * *\" --jobs tv",
+    "log": "node scripts/show-log.js",
+    "test:matching": "node scripts/test-matching.js",
+    "test:channels": "node scripts/test-channel-rules.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3"
+  }
+}

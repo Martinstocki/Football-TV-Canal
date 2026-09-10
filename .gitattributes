@@ -1,0 +1,18 @@
+# Zeilenenden einheitlich halten.
+#
+# Windows schreibt CRLF, Linux-Server erwarten LF. Ohne diese Datei warnt
+# Git bei jedem "add" und spaetere Aenderungen zeigen ganze Dateien als
+# geaendert an, obwohl nur die Zeilenenden anders sind.
+#
+# "text=auto eol=lf": im Repository immer LF, im Arbeitsverzeichnis darf
+# Windows CRLF verwenden. Auf dem Server (Railway) kommt dann sauberes LF an.
+* text=auto eol=lf
+
+# Binaerdateien nicht anfassen.
+*.png binary
+*.jpg binary
+*.ico binary
+*.db  binary
+
+# In der Sprachstatistik von GitHub nicht mitzaehlen.
+package-lock.json linguist-generated=true

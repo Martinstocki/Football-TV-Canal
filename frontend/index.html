@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1419">
+  <title>Fußball-Programm</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>⚽</text></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-row">
+    <h1>⚽ Fußball-Programm</h1>
+    <select id="country" class="country" aria-label="Land für Senderangaben"></select>
+  </div>
+
+  <nav class="tabs" id="tabs" role="tablist">
+    <button class="tab" data-range="today"    role="tab">Heute</button>
+    <button class="tab" data-range="tomorrow" role="tab">Morgen</button>
+    <button class="tab is-active" data-range="week" role="tab">Diese Woche</button>
+    <button class="tab" data-range="month"    role="tab">14 Tage</button>
+  </nav>
+
+  <div class="filter-row">
+    <input id="search" class="search" type="search" placeholder="Verein suchen …" autocomplete="off">
+    <button id="toggle-favs" class="ghost-btn" aria-pressed="false" title="Nur Spiele meiner Lieblingsvereine">★</button>
+    <button id="toggle-leagues" class="ghost-btn" aria-expanded="false">Ligen ▾</button>
+  </div>
+
+  <div id="leagues" class="leagues" hidden></div>
+</header>
+
+<main id="content" class="content" aria-live="polite">
+  <p class="state">Lade …</p>
+</main>
+
+<footer class="footer">
+  <span id="status-line"></span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

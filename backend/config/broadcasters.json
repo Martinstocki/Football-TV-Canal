@@ -1,0 +1,123 @@
+{
+  "_hinweis": [
+    "GROBER NOTNAGEL - normalerweise NICHT in Benutzung.",
+    "",
+    "Die exakten Sender inklusive Kanalnummer kommen aus dem Scraper",
+    "(scripts/scrape-tv.js). Diese Datei greift nur, wenn BROADCAST_FALLBACK=rule",
+    "in der .env gesetzt ist. Standard ist BROADCAST_FALLBACK=placeholder:",
+    "ohne Scraper-Treffer steht 'Sender wird noch bekannt gegeben' statt einer",
+    "geratenen Angabe.",
+    "",
+    "REGEL FUER DIESE DATEI: hier gehoeren NUR Sender hinein, die einen",
+    "flaechendeckenden Anspruch auf den ganzen Wettbewerb haben.",
+    "Sender mit Zweitverwertungsrecht auf EIN ausgewaehltes Spiel pro Spieltag",
+    "(ServusTV bei CL/EL/UECL, ORF 1 bei der oesterreichischen Bundesliga)",
+    "gehoeren NICHT hierher - pauschal eingetragen sind sie fast immer falsch.",
+    "Solche Sender liefert nur der Scraper pro Einzelspiel korrekt."
+  ],
+  "countries": {
+    "AT": "Österreich",
+    "DE": "Deutschland"
+  },
+  "rules": [
+    {
+      "competition": "CL",
+      "country": "AT",
+      "channels": [{ "name": "Sky Sport Austria", "type": "tv", "note": "Kanalnummer unbekannt" }]
+    },
+    {
+      "competition": "CL",
+      "country": "DE",
+      "channels": [
+        { "name": "DAZN", "type": "stream" },
+        { "name": "Amazon Prime Video", "type": "stream", "note": "Dienstags-Topspiel" }
+      ]
+    },
+    {
+      "competition": "EL",
+      "country": "AT",
+      "channels": [{ "name": "Sky Sport Austria", "type": "tv" }]
+    },
+    {
+      "competition": "EL",
+      "country": "DE",
+      "channels": [
+        { "name": "RTL+", "type": "stream" },
+        { "name": "RTL / NITRO", "type": "tv", "note": "einzelne Spiele frei empfangbar" }
+      ]
+    },
+    {
+      "competition": "UECL",
+      "country": "AT",
+      "channels": [{ "name": "Sky Sport Austria", "type": "tv" }]
+    },
+    {
+      "competition": "UECL",
+      "country": "DE",
+      "channels": [{ "name": "RTL+", "type": "stream" }]
+    },
+    {
+      "competition": "BL1",
+      "country": "AT",
+      "channels": [{ "name": "Sky Sport Austria", "type": "tv" }]
+    },
+    {
+      "competition": "BL1",
+      "country": "DE",
+      "channels": [
+        { "name": "Sky Sport", "type": "tv", "note": "Samstag Konferenz + Einzelspiele" },
+        { "name": "DAZN", "type": "stream", "note": "Freitag & Sonntag" }
+      ]
+    },
+    {
+      "competition": "AT1",
+      "country": "AT",
+      "channels": [{ "name": "Sky Sport Austria", "type": "tv", "note": "Kanalnummer unbekannt" }]
+    },
+    {
+      "competition": "AT1",
+      "country": "DE",
+      "channels": [{ "name": "Sky Sport", "type": "tv" }]
+    },
+    {
+      "competition": "PL",
+      "country": "AT",
+      "channels": [{ "name": "Sky Sport Austria", "type": "tv" }]
+    },
+    {
+      "competition": "PL",
+      "country": "DE",
+      "channels": [{ "name": "Sky Sport", "type": "tv" }]
+    },
+    {
+      "competition": "PD",
+      "country": "AT",
+      "channels": [{ "name": "DAZN", "type": "stream" }]
+    },
+    {
+      "competition": "PD",
+      "country": "DE",
+      "channels": [{ "name": "DAZN", "type": "stream" }]
+    },
+    {
+      "competition": "SA",
+      "country": "AT",
+      "channels": [{ "name": "DAZN", "type": "stream" }]
+    },
+    {
+      "competition": "SA",
+      "country": "DE",
+      "channels": [{ "name": "DAZN", "type": "stream" }]
+    },
+    {
+      "competition": "FL1",
+      "country": "AT",
+      "channels": [{ "name": "DAZN", "type": "stream" }]
+    },
+    {
+      "competition": "FL1",
+      "country": "DE",
+      "channels": [{ "name": "DAZN", "type": "stream" }]
+    }
+  ]
+}
