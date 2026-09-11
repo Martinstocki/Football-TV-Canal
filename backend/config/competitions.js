@@ -4,6 +4,7 @@
  * code            interner Schluessel (auch in der DB und im Frontend)
  * footballData    Code bei football-data.org (null = im Gratis-Tarif nicht verfuegbar)
  * apiFootball     League-ID bei api-football.com
+ * abbr            Kuerzel im Kalendertitel, z. B. "⚽ Rapid – Sturm (ÖBL)"
  * color           Farbe des Filter-Chips im Frontend
  */
 export const COMPETITIONS = [
@@ -11,6 +12,7 @@ export const COMPETITIONS = [
     code: 'CL',
     name: 'Champions League',
     shortName: 'CL',
+    abbr: 'CL',
     country: 'EU',
     footballData: 'CL',
     apiFootball: 2,
@@ -21,6 +23,7 @@ export const COMPETITIONS = [
     code: 'EL',
     name: 'Europa League',
     shortName: 'EL',
+    abbr: 'EL',
     country: 'EU',
     footballData: null, // nur im Bezahl-Tarif
     apiFootball: 3,
@@ -31,6 +34,7 @@ export const COMPETITIONS = [
     code: 'UECL',
     name: 'Conference League',
     shortName: 'Conference',
+    abbr: 'ECL',
     country: 'EU',
     footballData: null,
     apiFootball: 848,
@@ -41,6 +45,7 @@ export const COMPETITIONS = [
     code: 'BL1',
     name: 'Bundesliga (Deutschland)',
     shortName: 'Bundesliga',
+    abbr: 'BL',
     country: 'DE',
     footballData: 'BL1',
     apiFootball: 78,
@@ -51,6 +56,7 @@ export const COMPETITIONS = [
     code: 'AT1',
     name: 'Bundesliga (Österreich)',
     shortName: 'ÖBL',
+    abbr: 'ÖBL',
     country: 'AT',
     footballData: null, // bei football-data.org gar nicht vorhanden
     apiFootball: 218,
@@ -61,6 +67,7 @@ export const COMPETITIONS = [
     code: 'PL',
     name: 'Premier League',
     shortName: 'Premier L.',
+    abbr: 'PL',
     country: 'GB',
     footballData: 'PL',
     apiFootball: 39,
@@ -71,6 +78,7 @@ export const COMPETITIONS = [
     code: 'PD',
     name: 'La Liga',
     shortName: 'La Liga',
+    abbr: 'LaLiga',
     country: 'ES',
     footballData: 'PD',
     apiFootball: 140,
@@ -81,6 +89,7 @@ export const COMPETITIONS = [
     code: 'SA',
     name: 'Serie A',
     shortName: 'Serie A',
+    abbr: 'Serie A',
     country: 'IT',
     footballData: 'SA',
     apiFootball: 135,
@@ -91,6 +100,7 @@ export const COMPETITIONS = [
     code: 'FL1',
     name: 'Ligue 1',
     shortName: 'Ligue 1',
+    abbr: 'Ligue 1',
     country: 'FR',
     footballData: 'FL1',
     apiFootball: 61,

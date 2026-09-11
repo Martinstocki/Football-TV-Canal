@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import express from 'express';
 
 import { initSchema, DB_PATH, PROJECT_ROOT } from './db/index.js';
 import { router as api } from './routes/api.js';
+import { kalenderRoute } from './routes/kalender.js';
+import { gleich } from './services/auth.js';
 import { laufStarten, planEinrichten, jobsAusUmgebung } from './services/scheduler.js';
 import { logPath } from './services/logger.js';
 
@@ -35,14 +36,18 @@ app.use((_req, res, next) => {
  */
 app.get('/healthz', (_req, res) => res.type('text').send('ok'));
 
-/** Zeitkonstanter Vergleich - verraet ueber die Dauer nichts ueber das Passwort. */
-function gleich(a, b) {
-  const bufA = Buffer.from(String(a));
-  const bufB = Buffer.from(String(b));
-  // timingSafeEqual verlangt gleiche Laenge, deshalb vorher hashen.
-  const hashA = crypto.createHash('sha256').update(bufA).digest();
-  const hashB = crypto.createHash('sha256').update(bufB).digest();
-  return crypto.timingSafeEqual(hashA, hashB);
+/**
+ * Kalender-Abo - ebenfalls vor der Basic Auth, weil Kalender-Apps (vor allem
+ * Google) keine Passwoerter mitschicken koennen. Geschuetzt durch den Token
+ * aus KALENDER_TOKEN, ohne Token ist der Endpunkt abgeschaltet.
+ */
+app.get('/kalender.ics', kalenderRoute);
+
+if (process.env.KALENDER_TOKEN) {
+  console.log('Kalender-Feed aktiv: /kalender.ics?token=... (Token aus KALENDER_TOKEN)');
+  if (process.env.KALENDER_TOKEN.length < 20) {
+    console.warn('WARNUNG: KALENDER_TOKEN ist kurz und damit leichter zu erraten. Empfohlen: 32 Zeichen.');
+  }
 }
 
 // Zugangsschutz: aktiv, sobald APP_USER und APP_PASSWORD gesetzt sind.

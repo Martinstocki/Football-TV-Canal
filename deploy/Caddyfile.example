@@ -31,5 +31,15 @@ DEINE-ADRESSE.duckdns.org {
 			roll_size 10mb
 			roll_keep 3
 		}
+
+		# Der Kalender-Token steht in der URL (/kalender.ics?token=...).
+		# Ohne diesen Filter laege er im Klartext im Protokoll.
+		format filter {
+			fields {
+				request>uri query {
+					replace token GESCHWAERZT
+				}
+			}
+		}
 	}
 }
