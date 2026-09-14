@@ -27,6 +27,8 @@
     "scheduler": "node scripts/scheduler.js",
     "scheduler:once": "node scripts/scheduler.js --once",
     "scheduler:test": "node scripts/scheduler.js --cron \"* * * * *\" --jobs tv",
+    "discord": "node scripts/post-discord.js",
+    "discord:dry": "node scripts/post-discord.js --dry-run",
     "log": "node scripts/show-log.js",
     "test:matching": "node scripts/test-matching.js",
     "test:channels": "node scripts/test-channel-rules.js"

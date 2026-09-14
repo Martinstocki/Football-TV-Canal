@@ -1,0 +1,77 @@
+name: Fussball-Update nach Discord
+
+on:
+  # ACHTUNG, GitHub rechnet Zeitplaene IMMER in UTC - "Europe/Vienna" gibt es
+  # hier nicht. 06:00 UTC sind in der Sommerzeit 08:00 Uhr in Wien, in der
+  # Winterzeit 07:00 Uhr. Wer im Winter lieber wieder 08:00 haette, aendert
+  # den Wert zweimal im Jahr auf "0 7 * * *".
+  #
+  # GitHub startet geplante Laeufe ausserdem nicht auf die Minute genau:
+  # bei hoher Last sind 10 bis 30 Minuten Verzoegerung normal, einzelne
+  # Laeufe koennen ganz ausfallen. Fuer ein Fussballprogramm ist das
+  # verkraftbar - fuer etwas Zeitkritisches waere es das nicht.
+  schedule:
+    - cron: '0 6 * * *'
+
+  # Zum Testen von Hand ausloesbar (Reiter "Actions" -> "Run workflow").
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Nur anzeigen, nichts posten'
+        type: boolean
+        default: false
+      date:
+        description: 'Anderer Tag (YYYY-MM-DD), leer = heute'
+        type: string
+        default: ''
+
+# Das Skript liest nur - es schreibt nichts ins Repository zurueck.
+permissions:
+  contents: read
+
+# Zwei gleichzeitige Laeufe wuerden die Nachricht doppelt posten.
+concurrency:
+  group: discord-update
+  cancel-in-progress: false
+
+jobs:
+  posten:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Projekt auschecken
+        uses: actions/checkout@v4
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          # Passt zu "engines" in der package.json
+          node-version: '22'
+          cache: 'npm'
+
+      # .npmrc im Projekt setzt ignore-scripts=true. Das ist hier genau
+      # richtig: better-sqlite3 wird zwar mitinstalliert, aber von diesem
+      # Skript nie geladen - es braucht keine Datenbank.
+      - name: Abhaengigkeiten installieren
+        run: npm ci
+
+      - name: Nachricht verschicken
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TZ: Europe/Vienna
+          # "false" = an spielfreien Tagen gar nichts posten.
+          POST_WHEN_EMPTY: 'true'
+
+          # Die Eingaben kommen als Umgebungsvariablen in die Shell und NICHT
+          # per ${{ }} direkt in die Befehlszeile. Sonst koennte jemand, der
+          # den Workflow von Hand ausloesen darf, statt eines Datums eigene
+          # Befehle eintragen, die der Runner dann ausfuehrt.
+          DRY_RUN: ${{ inputs.dry_run }}
+          RUN_DATE: ${{ inputs.date }}
+        run: |
+          ARGS=""
+          if [ "$DRY_RUN" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "$RUN_DATE" ]; then ARGS="$ARGS --date $RUN_DATE"; fi
+          node scripts/post-discord.js $ARGS

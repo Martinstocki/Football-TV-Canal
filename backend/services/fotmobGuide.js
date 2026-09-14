@@ -30,7 +30,9 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { PROJECT_ROOT } from '../db/index.js';
+// Nur den Pfad, nicht das Datenbankmodul: so laesst sich der Scraper auch
+// dort verwenden, wo es keine Datenbank gibt (siehe config/paths.js).
+import { PROJECT_ROOT } from '../config/paths.js';
 
 const PAGES = {
   AT: 'https://www.fotmob.com/de/tv-guide/at',

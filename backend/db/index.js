@@ -3,9 +3,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
 import { COMPETITIONS } from '../config/competitions.js';
+import { PROJECT_ROOT } from '../config/paths.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-export const PROJECT_ROOT = path.resolve(__dirname, '..', '..');
+
+// Weiterhin von hier exportiert, damit bestehende Importe unveraendert
+// funktionieren. Zuhause ist der Pfad jetzt in config/paths.js - siehe die
+// Begruendung dort.
+export { PROJECT_ROOT };
 
 const dbPath = path.resolve(
   PROJECT_ROOT,
