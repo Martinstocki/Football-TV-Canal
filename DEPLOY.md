@@ -38,15 +38,6 @@ zu Hause nicht durchlaufen soll.
 
 Du hast nach Railway gefragt, also geht es unten damit weiter.
 
-### Weg C — Oracle Cloud Always Free
-
-Dauerhaft kostenlos, echter Server mit Festplatte, läuft durch. Kein
-Ablaufdatum. Dafür verwaltest du eine Linux-VM selbst: SSH, systemd-Dienst,
-zwei Firewalls, HTTPS über Caddy.
-
-**Eigene Anleitung: [DEPLOY-ORACLE.md](DEPLOY-ORACLE.md)** — 1 bis 2 Stunden
-beim ersten Mal.
-
 ### Was für diese App nicht funktioniert
 
 Die App braucht zwei Dinge, die viele Gratis-Angebote nicht bieten: eine
